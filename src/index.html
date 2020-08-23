@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <title>RankYou - Sistema de Pontuação</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  </head>
+
+  <body>
+    <div class="startScreen active">
+      <header>
+        <p>Qual o total de pontos?</p>
+        <div class="errorBlock">
+          <input
+            class="pointsTotal"
+            placeholder="Apenas números"
+            type="number"
+            min="0"
+            autofocus
+          >
+          <p class="error">Erro</p>
+        </div>
+        <button type="button" class="btnStart">Começar!</button>
+      </header>
+    </div>
+
+    <main class="content">
+      <h1 class="points">
+        Total de pontos: <span class="count">0</span> de <span class="total">50</span>
+      </h1>
+
+      <div class="items">
+        <!-- <div class="item">
+          <button type="button" class="remove" onclick="removeItem(this)">×</button>
+          <div class="errorBlock">
+            <input type="text" placeholder="Título do item" class="title">
+            <p class="error">Erro</p>
+          </div>
+          <button type="button" class="minus" onclick="decrement(this)">-</button>
+          <div class="errorBlock">
+            <input
+              class="value"
+              type="number"
+              value="0"
+              min="0"
+              onkeydown="updateItemPointsIfKeyAllowed(event)"
+              oninput="handlePointsUpdate(this)"
+            >
+            <p class="error">Erro</p>
+          </div>
+          <button type="button" class="plus" onclick="increment(this)">+</button>
+        </div> -->
+      </div>
+
+      <div class="addItem">
+        <button type="button" class="btnAddItem">+ Adicionar Item</button>
+      </div>
+    </main>
+
+    <script src="scripts.js"></script>
+  </body>
+</html>
