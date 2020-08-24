@@ -88,12 +88,23 @@ const updateItemPointsIfKeyAllowed = event => {
   event.preventDefault();
 }
 
-const isNumber = value => {
-  if (value !== ' ') {
-    const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+const isNumber = ([...values]) => {
+  const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  let isNumber = true;
 
-    return numbers.filter(number => number === +value).length ? true : false;
-  }
+  values.forEach(value => {
+    if (value !== ' ') {
+      const valuesThatAreNumbers = numbers.filter(number => number === +value);
+
+      if (!valuesThatAreNumbers.length) {
+        isNumber = false;
+      }
+    } else {
+      isNumber = false;
+    }
+  });
+
+  return isNumber;
 };
 
 const increment = btnPlus => {
@@ -102,6 +113,9 @@ const increment = btnPlus => {
   if (+usedPointsQuantity.innerText < +totalPointsQuantity.innerText) {
     itemPoints.value++;
     usedPointsQuantity.innerText++;
+  } else {
+    const message = 'Chegou no valor máximo';
+    showErrorMessage(itemPoints, message);
   }
 };
 
@@ -111,6 +125,9 @@ const decrement = btnMinus => {
   if (+itemPoints.value > 0) {
     itemPoints.value--;
     usedPointsQuantity.innerText--;
+  } else {
+    const message = 'Chegou no valor mínimo';
+    showErrorMessage(itemPoints, message);
   }
 };
 
@@ -169,13 +186,13 @@ const removeItem = btnRemoveItem => {
 const init = () => {
   const value = inputPointsTotal.value;
 
-  if (value.length) {
+  if (value.length && isNumber(value)) {
     totalPointsQuantity.innerText = value;
 
     startScreen.classList.remove('active');
     mainContent.classList.add('active');
   } else {
-    const message = 'Preencha o campo com números';
+    const message = 'O valor deve ser inteiro e maior que 0';
     showErrorMessage(inputPointsTotal, message);
   }
 };
@@ -185,16 +202,3 @@ inputPointsTotal.addEventListener('keydown', ({ key }) => {
 });
 btnStart.addEventListener('click', init);
 btnAddItem.addEventListener('click', addNemItem);
-
-
-/*
-
-  EXIBIR MENSAGENS DE ERRO:
-
-    StartScreen:
-      - !number in <input type="number">
-      - start with input value empty
-      - add a new item with last input title empty
-      - itemPoints > pointsTotal
-
-*/
